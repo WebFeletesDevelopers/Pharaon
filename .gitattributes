@@ -1,0 +1,2 @@
+pre-push linguist-detectable=false
+cfg/scripts/set_up_git_hooks.sh linguist-detectable=false

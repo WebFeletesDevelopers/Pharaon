@@ -1,0 +1,20 @@
+version: "3.4"
+services:
+  php:
+    build:
+      context: .
+      dockerfile: cfg/docker-images/dev/php-cli.Dockerfile
+    volumes:
+    - ".:/app"
+
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: devel
+    ports:
+    - "3306:3306"
+    volumes:
+    - "pharaon_data:/var/lib/mysql"
+
+volumes:
+  pharaon_data:
