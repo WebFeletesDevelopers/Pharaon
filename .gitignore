@@ -1,0 +1,7 @@
+.idea
+/vendor/
+test/coverage
+test/.phpunit.result.cache
+infection.log
+.phpdoc
+docs
