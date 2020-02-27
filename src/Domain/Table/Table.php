@@ -33,7 +33,7 @@ class Table
 
     /**
      * @param string $name
-     * @return static
+     * @return self
      * @throws InvalidTableNameException
      */
     public static function fromTableName(string $name): self

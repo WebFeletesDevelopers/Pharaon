@@ -2,7 +2,7 @@
 
 namespace WebFeletesDevelopers\Pharaon\Domain\Table;
 
-use \Exception;
+use Exception;
 
 /**
  * Class InvalidTableNameException
@@ -15,7 +15,7 @@ class InvalidTableNameException extends Exception
 
     /**
      * @param string $name
-     * @return static
+     * @return self
      */
     public static function fromInvalidName(string $name): self
     {
