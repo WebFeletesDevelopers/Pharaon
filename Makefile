@@ -10,7 +10,11 @@ docker-images-dev:
 	$(dcompose) -f $(devfile) build
 
 dependencies-dev:
-	$(dcompose) -f $(devfile) run $(php_container) composer install
+	$(dcompose) -f $(devfile) run $(php_container) composer install ${args}
+
+update-dependencies-dev:
+	$(dcompose) -f $(devfile) run $(php_container) composer update ${args}
+
 
 scripts:
 	sh cfg/scripts/set_up_git_hooks.sh
