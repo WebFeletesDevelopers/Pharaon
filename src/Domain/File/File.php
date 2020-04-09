@@ -6,19 +6,27 @@ namespace WebFeletesDevelopers\Pharaon\Domain\File;
  * Class File
  * @package WebFeletesDevelopers\Pharaon\Domain\File
  * @author WebFeletesDevelopers
+ * @TODO: Create a directory class maybe?
  */
 class File
 {
+    private const INVALID_FILES_NAME = ['.', '..'];
+
     private string $absolutePath;
     private string $content;
+    private bool $isFolder;
 
     /**
      * File constructor.
      * @param string $absolutePath
+     * @param bool $isFolder
      */
-    private function __construct(string $absolutePath)
-    {
+    private function __construct(
+        string $absolutePath,
+        bool $isFolder = false
+    ) {
         $this->absolutePath = $absolutePath;
+        $this->isFolder = $isFolder;
     }
 
     /**
@@ -45,7 +53,7 @@ class File
             throw InvalidFileException::fromErrorParsingPath($path);
         }
 
-        return new File($realPath);
+        return new File($realPath, is_dir($realPath));
     }
 
     /**
@@ -54,7 +62,7 @@ class File
      */
     public function content(): string
     {
-        if (! $this->content) {
+        if (! $this->isFolder && ! $this->content) {
             $this->fillContent();
         }
 
@@ -72,5 +80,39 @@ class File
         }
 
         $this->content = $fileContent;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFolder(): bool
+    {
+        return $this->isFolder;
+    }
+
+    /**
+     * @return array<File>
+     * @throws InvalidFileException
+     */
+    public function findFilesInside(): array
+    {
+        $files = [];
+
+        if (! $this->isFolder()) {
+            throw InvalidFileException::fromErrorNoDirectory($this->absolutePath());
+        }
+
+        $directoryContent = scandir($this->absolutePath());
+        if (empty($directoryContent)) {
+            throw InvalidFileException::fromErrorNoDirectory($this->absolutePath());
+        }
+
+        $filesPath = array_diff($directoryContent, self::INVALID_FILES_NAME);
+
+        foreach ($filesPath as $filePath) {
+            $files[] = self::fromRelativePath($this->absolutePath() . DIRECTORY_SEPARATOR . $filePath);
+        }
+
+        return $files;
     }
 }
