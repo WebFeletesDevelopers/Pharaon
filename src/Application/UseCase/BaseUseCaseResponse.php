@@ -12,7 +12,7 @@ use Exception;
 abstract class BaseUseCaseResponse
 {
     protected bool $success = true;
-    protected ?Exception $error;
+    protected ?Exception $error = null;
 
     /**
      * @return bool

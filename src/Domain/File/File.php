@@ -44,13 +44,10 @@ class File
      */
     public static function fromRelativePath(string $path): self
     {
-        if (! file_exists($path)) {
-            throw InvalidFileException::fromNotFoundRelativePath($path);
-        }
-
         $realPath = realpath($path);
+
         if (! $realPath) {
-            throw InvalidFileException::fromErrorParsingPath($path);
+            throw InvalidFileException::fromNotFoundRelativePath($path);
         }
 
         return new File($realPath, is_dir($realPath));
@@ -102,12 +99,14 @@ class File
             throw InvalidFileException::fromErrorNoDirectory($this->absolutePath());
         }
 
+        /** @var array<string> $directoryContent */
         $directoryContent = scandir($this->absolutePath());
-        if (empty($directoryContent)) {
-            throw InvalidFileException::fromErrorNoDirectory($this->absolutePath());
-        }
 
         $filesPath = array_diff($directoryContent, self::INVALID_FILES_NAME);
+
+        if (empty($filesPath)) {
+            throw InvalidFileException::fromErrorEmptyDirectory($this->absolutePath());
+        }
 
         foreach ($filesPath as $filePath) {
             $files[] = self::fromRelativePath($this->absolutePath() . DIRECTORY_SEPARATOR . $filePath);
