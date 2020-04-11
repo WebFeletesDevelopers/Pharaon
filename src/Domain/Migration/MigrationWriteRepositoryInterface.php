@@ -1,0 +1,13 @@
+<?php
+
+namespace WebFeletesDevelopers\Pharaon\Domain\Migration;
+
+/**
+ * Interface MigrationWriteRepository
+ * @package WebFeletesDevelopers\Pharaon\Domain\Migration
+ * @author WebFeletesDevelopers
+ */
+interface MigrationWriteRepositoryInterface
+{
+    public function executeAndSaveMigration(Migration $migration): bool;
+}

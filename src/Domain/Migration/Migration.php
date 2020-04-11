@@ -2,6 +2,8 @@
 
 namespace WebFeletesDevelopers\Pharaon\Domain\Migration;
 
+use DateTimeImmutable;
+use Exception;
 use WebFeletesDevelopers\Pharaon\Domain\File\File;
 
 /**
@@ -13,6 +15,7 @@ class Migration
 {
     private File $migrateFile;
     private File $undoFile;
+    private ?DateTimeImmutable $migrationDate = null;
 
     /**
      * Migration constructor.
@@ -41,5 +44,21 @@ class Migration
     public function undoFile(): File
     {
         return $this->undoFile;
+    }
+
+    /**
+     * @return DateTimeImmutable
+     * @throws Exception
+     */
+    public function migrationDate(): DateTimeImmutable
+    {
+        if (! $this->migrationDate) {
+            $path = $this->migrateFile()->absolutePath();
+            $explodedPath = explode(DIRECTORY_SEPARATOR, $path);
+            $fileName = $explodedPath[count($explodedPath) - 1];
+            $this->migrationDate = new DateTimeImmutable(explode('_', $fileName)[0]);
+        }
+
+        return $this->migrationDate;
     }
 }
