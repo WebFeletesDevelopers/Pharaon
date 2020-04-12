@@ -32,7 +32,7 @@ SQL;
         }
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return empty($result);
+        return ! empty($result);
     }
 
     /**
@@ -44,7 +44,7 @@ SQL;
     public function findAllExecutedMigrations(string $schema): array
     {
         $query = <<<SQL
-        SELECT m.name
+        SELECT m.name as name
         FROM ${schema}.migrations as m;
 SQL;
         $statement = $this->connection->query($query);

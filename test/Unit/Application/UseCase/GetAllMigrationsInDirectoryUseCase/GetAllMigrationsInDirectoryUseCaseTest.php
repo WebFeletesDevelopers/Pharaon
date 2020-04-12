@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase\GetAllMigrationsInDirectoryArguments;
 use WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase\GetAllMigrationsInDirectoryUseCase;
 use WebFeletesDevelopers\Pharaon\Domain\File\InvalidFileException;
-use WebFeletesDevelopers\Pharaon\Test\Unit\Domain\File\FileProvider;
 use WebFeletesDevelopers\Pharaon\Test\Unit\Domain\Migration\MigrationProvider;
 
 /**
@@ -27,14 +26,8 @@ class GetAllMigrationsInDirectoryUseCaseTest extends TestCase
         $sut = new GetAllMigrationsInDirectoryUseCase();
         $response = $sut->handle($arguments);
 
-        $firstMigration = MigrationProvider::getOne(
-            FileProvider::getOneFromPath(__DIR__ . '/../../../Assets/migrations/20200409153200_up.sql'),
-            FileProvider::getOneFromPath(__DIR__ . '/../../../Assets/migrations/20200409153200_down.sql'),
-        );
-        $secondMigration = MigrationProvider::getOne(
-            FileProvider::getOneFromPath(__DIR__ . '/../../../Assets/migrations/20200409153217_up.sql'),
-            FileProvider::getOneFromPath(__DIR__ . '/../../../Assets/migrations/20200409153217_down.sql'),
-        );
+        $testMigrations = MigrationProvider::getTestData();
+        [$firstMigration, $secondMigration] = $testMigrations;
 
         $this->assertTrue($response->success());
         $this->assertEmpty($response->error());

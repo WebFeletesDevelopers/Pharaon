@@ -2,6 +2,8 @@
 
 namespace WebFeletesDevelopers\Pharaon\Domain\Migration;
 
+use WebFeletesDevelopers\Pharaon\Infrastructure\Repository\FailedQueryException;
+
 /**
  * Interface MigrationReadRepository
  * @package WebFeletesDevelopers\Pharaon\Domain\Migration
@@ -14,6 +16,8 @@ interface MigrationReadRepositoryInterface
     /**
      * @param string $schema
      * @return string[]
+     * @throws MigrationNotFoundException
+     * @throws FailedQueryException
      */
     public function findAllExecutedMigrations(string $schema): array;
 }
