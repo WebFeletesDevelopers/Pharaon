@@ -12,6 +12,7 @@ class File
 {
     private const INVALID_FILES_NAME = ['.', '..'];
 
+    private string $name;
     private string $absolutePath;
     private string $content;
     private bool $isFolder;
@@ -19,22 +20,17 @@ class File
     /**
      * File constructor.
      * @param string $absolutePath
+     * @param string $name
      * @param bool $isFolder
      */
     private function __construct(
         string $absolutePath,
+        string $name,
         bool $isFolder = false
     ) {
         $this->absolutePath = $absolutePath;
+        $this->name = $name;
         $this->isFolder = $isFolder;
-    }
-
-    /**
-     * @return string
-     */
-    public function absolutePath(): string
-    {
-        return $this->absolutePath;
     }
 
     /**
@@ -50,7 +46,27 @@ class File
             throw InvalidFileException::fromNotFoundRelativePath($path);
         }
 
-        return new File($realPath, is_dir($realPath));
+        $fileName = self::findFileName($path);
+
+        return new File($realPath, $fileName, is_dir($realPath));
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    private static function findFileName(string $path): string
+    {
+        $explodedPath = explode(DIRECTORY_SEPARATOR, $path);
+        return $explodedPath[count($explodedPath) - 1];
+    }
+
+    /**
+     * @return string
+     */
+    public function absolutePath(): string
+    {
+        return $this->absolutePath;
     }
 
     /**
@@ -85,6 +101,14 @@ class File
     public function isFolder(): bool
     {
         return $this->isFolder;
+    }
+
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return $this->name;
     }
 
     /**

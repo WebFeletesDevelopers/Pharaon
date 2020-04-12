@@ -2,8 +2,8 @@
 
 namespace WebFeletesDevelopers\Pharaon\Application\UseCase\ExecuteMigrationUseCase;
 
-use Exception;
-use WebFeletesDevelopers\Pharaon\Domain\Connection\ConnectionInterface;
+use WebFeletesDevelopers\Pharaon\Domain\Migration\MigrationReadRepositoryInterface;
+use WebFeletesDevelopers\Pharaon\Domain\Migration\MigrationWriteRepositoryInterface;
 
 /**
  * Class ExecuteMigrationUseCase
@@ -12,15 +12,20 @@ use WebFeletesDevelopers\Pharaon\Domain\Connection\ConnectionInterface;
  */
 class ExecuteMigrationUseCase
 {
-    private ConnectionInterface $connection;
+    private MigrationReadRepositoryInterface $readRepository;
+    private MigrationWriteRepositoryInterface $writeRepository;
 
     /**
      * ExecuteMigrationUseCase constructor.
-     * @param ConnectionInterface $connection
+     * @param MigrationReadRepositoryInterface $readRepository
+     * @param MigrationWriteRepositoryInterface $writeRepository
      */
-    public function __construct(ConnectionInterface $connection)
-    {
-        $this->connection = $connection;
+    public function __construct(
+        MigrationReadRepositoryInterface $readRepository,
+        MigrationWriteRepositoryInterface $writeRepository
+    ) {
+        $this->readRepository = $readRepository;
+        $this->writeRepository = $writeRepository;
     }
 
     /**
@@ -29,16 +34,8 @@ class ExecuteMigrationUseCase
      */
     public function handle(ExecuteMigrationArguments $arguments): ExecuteMigrationResponse
     {
+        // TODO: WIP
         $response = new ExecuteMigrationResponse();
-
-        try {
-            $migration = $arguments->migration();
-            $upFile = $migration->migrateFile();
-            $query = $upFile->content();
-            $this->connection->query($query);
-        } catch (Exception $e) {
-            $response->setError($e);
-        }
 
         return $response;
     }

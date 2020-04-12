@@ -9,5 +9,6 @@ namespace WebFeletesDevelopers\Pharaon\Domain\Migration;
  */
 interface MigrationWriteRepositoryInterface
 {
-    public function executeAndSaveMigration(Migration $migration): bool;
+    public function createMigrationsTable(string $schema): bool;
+    public function executeAndSaveMigration(ExecutableMigration $migration, string $schema): bool;
 }

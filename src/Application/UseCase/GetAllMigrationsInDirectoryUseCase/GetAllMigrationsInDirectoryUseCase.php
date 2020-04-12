@@ -5,7 +5,7 @@ namespace WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDir
 use Exception;
 use WebFeletesDevelopers\Pharaon\Domain\File\File;
 use WebFeletesDevelopers\Pharaon\Domain\File\InvalidFileException;
-use WebFeletesDevelopers\Pharaon\Domain\Migration\Migration;
+use WebFeletesDevelopers\Pharaon\Domain\Migration\ExecutableMigration;
 
 /**
  * Class GetAllMigrationsInDirectoryUseCase
@@ -35,7 +35,7 @@ class GetAllMigrationsInDirectoryUseCase
 
     /**
      * @param string $directory
-     * @return array<Migration>
+     * @return array<ExecutableMigration>
      * @throws InvalidFileException
      */
     private function getAllMigrationFilesFromDirectory(string $directory): array
@@ -69,7 +69,7 @@ class GetAllMigrationsInDirectoryUseCase
 
     /**
      * @param array{up:File[], down:File[]} $files
-     * @return array<Migration>
+     * @return array<ExecutableMigration>
      */
     private function convertOrderedFilesToMigrations(array $files): array
     {
@@ -77,7 +77,7 @@ class GetAllMigrationsInDirectoryUseCase
 
         $migrationsCount = count($files['up']);
         for ($i = 0; $i < $migrationsCount; $i++) {
-            $migrations[] = new Migration($files['up'][$i], $files['down'][$i]);
+            $migrations[] = ExecutableMigration::fromUpAndDownFiles($files['up'][$i], $files['down'][$i]);
         }
 
         return $migrations;

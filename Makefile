@@ -44,3 +44,8 @@ infection:
 
 docs:
 	$(dcompose) -f $(devfile) run $(php_container) phpdoc -d ./src -t ./docs --template="clean"
+
+remove-data:
+	$(dcompose) -f $(devfile) down -v
+
+daily-up: remove-data start-dev

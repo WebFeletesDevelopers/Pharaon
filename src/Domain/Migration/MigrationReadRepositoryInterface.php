@@ -9,5 +9,11 @@ namespace WebFeletesDevelopers\Pharaon\Domain\Migration;
  */
 interface MigrationReadRepositoryInterface
 {
-    public function findLastExecuted(): string;
+    public function migrationsTableExists(string $schema): bool;
+
+    /**
+     * @param string $schema
+     * @return string[]
+     */
+    public function findAllExecutedMigrations(string $schema): array;
 }

@@ -4,7 +4,6 @@ namespace WebFeletesDevelopers\Pharaon\Domain\Migration;
 
 use DateTimeImmutable;
 use Exception;
-use WebFeletesDevelopers\Pharaon\Domain\File\File;
 
 /**
  * Class Migration
@@ -13,38 +12,17 @@ use WebFeletesDevelopers\Pharaon\Domain\File\File;
  */
 class Migration
 {
-    private File $migrateFile;
-    private File $undoFile;
-    private ?DateTimeImmutable $migrationDate = null;
+    protected DateTimeImmutable $migrationDate;
 
     /**
      * Migration constructor.
-     * @param File $migrateFile
-     * @param File $undoFile
+     * @param DateTimeImmutable $migrationDate
      */
-    public function __construct(
-        File $migrateFile,
-        File $undoFile
-    ) {
-        $this->migrateFile = $migrateFile;
-        $this->undoFile = $undoFile;
+    public function __construct(DateTimeImmutable $migrationDate)
+    {
+        $this->migrationDate = $migrationDate;
     }
 
-    /**
-     * @return File
-     */
-    public function migrateFile(): File
-    {
-        return $this->migrateFile;
-    }
-
-    /**
-     * @return File
-     */
-    public function undoFile(): File
-    {
-        return $this->undoFile;
-    }
 
     /**
      * @return DateTimeImmutable
@@ -52,13 +30,6 @@ class Migration
      */
     public function migrationDate(): DateTimeImmutable
     {
-        if (! $this->migrationDate) {
-            $path = $this->migrateFile()->absolutePath();
-            $explodedPath = explode(DIRECTORY_SEPARATOR, $path);
-            $fileName = $explodedPath[count($explodedPath) - 1];
-            $this->migrationDate = new DateTimeImmutable(explode('_', $fileName)[0]);
-        }
-
         return $this->migrationDate;
     }
 }

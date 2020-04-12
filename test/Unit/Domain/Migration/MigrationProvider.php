@@ -3,6 +3,7 @@
 namespace WebFeletesDevelopers\Pharaon\Test\Unit\Domain\Migration;
 
 use WebFeletesDevelopers\Pharaon\Domain\File\File;
+use WebFeletesDevelopers\Pharaon\Domain\Migration\ExecutableMigration;
 use WebFeletesDevelopers\Pharaon\Domain\Migration\Migration;
 
 /**
@@ -21,6 +22,6 @@ class MigrationProvider
         File $upFile,
         File $downFile
     ): Migration {
-        return new Migration($upFile, $downFile);
+        return ExecutableMigration::fromUpAndDownFiles($upFile, $downFile);
     }
 }
