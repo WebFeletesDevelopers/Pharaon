@@ -1,16 +1,16 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase;
+namespace WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration;
 
 use WebFeletesDevelopers\Pharaon\Application\UseCase\BaseUseCaseResponse;
 use WebFeletesDevelopers\Pharaon\Domain\Migration\ExecutableMigration;
 
 /**
- * Class FilterMigrationsByLastExecutedResponse
- * @package WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase
+ * Class GetLastExecutedMigrationResponse
+ * @package WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration
  * @author WebFeletesDevelopers
  */
-class FilterMigrationsByLastExecutedResponse extends BaseUseCaseResponse
+class GetLastExecutedMigrationResponse extends BaseUseCaseResponse
 {
     /** @var ExecutableMigration[] array */
     private array $migrations;

@@ -34,7 +34,6 @@ class ExecuteMigrationUseCase
      */
     public function handle(ExecuteMigrationArguments $arguments): ExecuteMigrationResponse
     {
-        // TODO: WIP
         $response = new ExecuteMigrationResponse();
 
         return $response;

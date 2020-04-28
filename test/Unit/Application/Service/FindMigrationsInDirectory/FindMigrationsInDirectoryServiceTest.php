@@ -1,19 +1,19 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Test\Unit\Application\UseCase\GetAllMigrationsInDirectoryUseCase;
+namespace WebFeletesDevelopers\Pharaon\Test\Unit\Application\Service\FindMigrationsInDirectory;
 
 use PHPUnit\Framework\TestCase;
-use WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase\GetAllMigrationsInDirectoryArguments;
-use WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase\GetAllMigrationsInDirectoryUseCase;
+use WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory\FindMigrationsInDirectoryArguments;
+use WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory\FindMigrationsInDirectoryService;
 use WebFeletesDevelopers\Pharaon\Domain\File\InvalidFileException;
 use WebFeletesDevelopers\Pharaon\Test\Unit\Domain\Migration\MigrationProvider;
 
 /**
- * Class GetAllMigrationsInDirectoryUseCaseTest
- * @package WebFeletesDevelopers\Pharaon\Test\Unit\Application\UseCase\GetAllMigrationsInDirectoryUseCase
+ * Class FindMigrationsInDirectoryServiceTest
+ * @package WebFeletesDevelopers\Pharaon\Test\Unit\Application\Service\FindMigrationsInDirectory
  * @author WebFeletesDevelopers
  */
-class GetAllMigrationsInDirectoryUseCaseTest extends TestCase
+class FindMigrationsInDirectoryServiceTest extends TestCase
 {
     /**
      * @test
@@ -22,8 +22,8 @@ class GetAllMigrationsInDirectoryUseCaseTest extends TestCase
     {
         $path = __DIR__ . '/../../../Assets/migrations';
 
-        $arguments = new GetAllMigrationsInDirectoryArguments($path);
-        $sut = new GetAllMigrationsInDirectoryUseCase();
+        $arguments = new FindMigrationsInDirectoryArguments($path);
+        $sut = new FindMigrationsInDirectoryService();
         $response = $sut->handle($arguments);
 
         $testMigrations = MigrationProvider::getTestData();
@@ -42,8 +42,8 @@ class GetAllMigrationsInDirectoryUseCaseTest extends TestCase
     {
         $path = __DIR__ . '/iDoNotExist';
 
-        $arguments = new GetAllMigrationsInDirectoryArguments($path);
-        $sut = new GetAllMigrationsInDirectoryUseCase();
+        $arguments = new FindMigrationsInDirectoryArguments($path);
+        $sut = new FindMigrationsInDirectoryService();
         $response = $sut->handle($arguments);
 
         $this->assertFalse($response->success());
@@ -57,8 +57,8 @@ class GetAllMigrationsInDirectoryUseCaseTest extends TestCase
     {
         $path = __DIR__ . '/../../../Assets/migrations/20200409153200_down.sql';
 
-        $arguments = new GetAllMigrationsInDirectoryArguments($path);
-        $sut = new GetAllMigrationsInDirectoryUseCase();
+        $arguments = new FindMigrationsInDirectoryArguments($path);
+        $sut = new FindMigrationsInDirectoryService();
         $response = $sut->handle($arguments);
 
         $this->assertFalse($response->success());
@@ -72,8 +72,8 @@ class GetAllMigrationsInDirectoryUseCaseTest extends TestCase
     {
         $path = __DIR__ . '/../../../Assets/emptymigrations';
 
-        $arguments = new GetAllMigrationsInDirectoryArguments($path);
-        $sut = new GetAllMigrationsInDirectoryUseCase();
+        $arguments = new FindMigrationsInDirectoryArguments($path);
+        $sut = new FindMigrationsInDirectoryService();
         $response = $sut->handle($arguments);
 
         $this->assertFalse($response->success());

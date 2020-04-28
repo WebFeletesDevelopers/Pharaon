@@ -1,15 +1,15 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase;
+namespace WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration;
 
 use WebFeletesDevelopers\Pharaon\Domain\Migration\ExecutableMigration;
 
 /**
- * Class FilterMigrationsByLastExecutedArguments
- * @package WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase
+ * Class GetLastExecutedMigrationArguments
+ * @package WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration
  * @author WebFeletesDevelopers
  */
-class FilterMigrationsByLastExecutedArguments
+class GetLastExecutedMigrationArguments
 {
     private string $schema;
     /** @var ExecutableMigration[] */

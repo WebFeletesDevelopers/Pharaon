@@ -1,6 +1,6 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase;
+namespace WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration;
 
 use Exception;
 use WebFeletesDevelopers\Pharaon\Domain\Migration\ExecutableMigration;
@@ -9,11 +9,11 @@ use WebFeletesDevelopers\Pharaon\Domain\Migration\MigrationReadRepositoryInterfa
 use WebFeletesDevelopers\Pharaon\Infrastructure\Repository\FailedQueryException;
 
 /**
- * Class FilterMigrationsByLastExecutedUseCase
- * @package WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase
+ * Class GetLastExecutedMigrationService
+ * @package WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration
  * @author WebFeletesDevelopers
  */
-class FilterMigrationsByLastExecutedUseCase
+class GetLastExecutedMigrationService
 {
     private MigrationReadRepositoryInterface $readRepository;
 
@@ -27,12 +27,12 @@ class FilterMigrationsByLastExecutedUseCase
     }
 
     /**
-     * @param FilterMigrationsByLastExecutedArguments $arguments
-     * @return FilterMigrationsByLastExecutedResponse
+     * @param GetLastExecutedMigrationArguments $arguments
+     * @return GetLastExecutedMigrationResponse
      */
-    public function handle(FilterMigrationsByLastExecutedArguments $arguments): FilterMigrationsByLastExecutedResponse
+    public function handle(GetLastExecutedMigrationArguments $arguments): GetLastExecutedMigrationResponse
     {
-        $response = new FilterMigrationsByLastExecutedResponse();
+        $response = new GetLastExecutedMigrationResponse();
 
         try {
             $migrationsTableExists = $this->readRepository->migrationsTableExists($arguments->schema());

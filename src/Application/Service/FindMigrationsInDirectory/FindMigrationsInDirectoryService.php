@@ -1,6 +1,6 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase;
+namespace WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory;
 
 use Exception;
 use WebFeletesDevelopers\Pharaon\Domain\File\File;
@@ -8,19 +8,19 @@ use WebFeletesDevelopers\Pharaon\Domain\File\InvalidFileException;
 use WebFeletesDevelopers\Pharaon\Domain\Migration\ExecutableMigration;
 
 /**
- * Class GetAllMigrationsInDirectoryUseCase
- * @package WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase
+ * Class FindMigrationsInDirectoryService
+ * @package WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory
  * @author WebFeletesDevelopers
  */
-class GetAllMigrationsInDirectoryUseCase
+class FindMigrationsInDirectoryService
 {
     /**
-     * @param GetAllMigrationsInDirectoryArguments $arguments
-     * @return GetAllMigrationsInDirectoryResponse
+     * @param FindMigrationsInDirectoryArguments $arguments
+     * @return FindMigrationsInDirectoryResponse
      */
-    public function handle(GetAllMigrationsInDirectoryArguments $arguments): GetAllMigrationsInDirectoryResponse
+    public function handle(FindMigrationsInDirectoryArguments $arguments): FindMigrationsInDirectoryResponse
     {
-        $response = new GetAllMigrationsInDirectoryResponse();
+        $response = new FindMigrationsInDirectoryResponse();
 
         try {
             $allMigrations = $this->getAllMigrationFilesFromDirectory($arguments->migrationFilesPath());
@@ -29,7 +29,6 @@ class GetAllMigrationsInDirectoryUseCase
             $response->setError($e);
         }
 
-
         return $response;
     }
 
@@ -37,6 +36,7 @@ class GetAllMigrationsInDirectoryUseCase
      * @param string $directory
      * @return array<ExecutableMigration>
      * @throws InvalidFileException
+     * @throws Exception
      */
     private function getAllMigrationFilesFromDirectory(string $directory): array
     {
@@ -70,6 +70,7 @@ class GetAllMigrationsInDirectoryUseCase
     /**
      * @param array{up:File[], down:File[]} $files
      * @return array<ExecutableMigration>
+     * @throws Exception
      */
     private function convertOrderedFilesToMigrations(array $files): array
     {

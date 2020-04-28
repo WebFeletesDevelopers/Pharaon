@@ -1,24 +1,19 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Test\Unit\Application\UseCase\FilterMigrationsByLastExecutedUseCase;
+namespace WebFeletesDevelopers\Pharaon\Test\Unit\Application\Service\GetLastExecutedMigration;
 
 use Mockery\MockInterface;
 use PDO;
 use PDOStatement;
 use PHPUnit\Framework\TestCase;
-use Mockery as m;
-use WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase\FilterMigrationsByLastExecutedArguments;
-use WebFeletesDevelopers\Pharaon\Application\UseCase\FilterMigrationsByLastExecutedUseCase\FilterMigrationsByLastExecutedUseCase;
+use WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration\GetLastExecutedMigrationArguments;
+use WebFeletesDevelopers\Pharaon\Application\Service\GetLastExecutedMigration\GetLastExecutedMigrationService;
 use WebFeletesDevelopers\Pharaon\Infrastructure\Repository\FailedQueryException;
 use WebFeletesDevelopers\Pharaon\Infrastructure\Repository\MigrationRepository\MigrationPDOReadRepository;
 use WebFeletesDevelopers\Pharaon\Test\Unit\Domain\Migration\MigrationProvider;
+use Mockery as m;
 
-/**
- * Class FilterMigrationsByLastExecutedUseCaseTest
- * @package WebFeletesDevelopers\Pharaon\Test\Unit\Application\UseCase\FilterMigrationsByLastExecutedUseCase
- * @author WebFeletesDevelopers
- */
-class FilterMigrationsByLastExecutedUseCaseTest extends TestCase
+class GetLastExecutedMigrationServiceTest extends TestCase
 {
     private const SCHEMA_NAME = 'dbname';
 
@@ -30,9 +25,9 @@ class FilterMigrationsByLastExecutedUseCaseTest extends TestCase
         $connection = $this->getPDO();
         $readRepository = new MigrationPDOReadRepository($connection);
         $testMigrations = MigrationProvider::getTestData();
-        $arguments = new FilterMigrationsByLastExecutedArguments(self::SCHEMA_NAME, ...$testMigrations);
+        $arguments = new GetLastExecutedMigrationArguments(self::SCHEMA_NAME, ...$testMigrations);
 
-        $sut = new FilterMigrationsByLastExecutedUseCase($readRepository);
+        $sut = new GetLastExecutedMigrationService($readRepository);
         $response = $sut->handle($arguments);
         [$firstMigration, $secondMigration] = $testMigrations;
 
@@ -54,9 +49,9 @@ class FilterMigrationsByLastExecutedUseCaseTest extends TestCase
         );
         $readRepository = new MigrationPDOReadRepository($connection);
         $testMigrations = MigrationProvider::getTestData();
-        $arguments = new FilterMigrationsByLastExecutedArguments(self::SCHEMA_NAME, ...$testMigrations);
+        $arguments = new GetLastExecutedMigrationArguments(self::SCHEMA_NAME, ...$testMigrations);
 
-        $sut = new FilterMigrationsByLastExecutedUseCase($readRepository);
+        $sut = new GetLastExecutedMigrationService($readRepository);
         $response = $sut->handle($arguments);
         $secondMigration = $testMigrations[1];
 
@@ -74,9 +69,9 @@ class FilterMigrationsByLastExecutedUseCaseTest extends TestCase
         $connection = $this->getPDO([]);
         $readRepository = new MigrationPDOReadRepository($connection);
         $testMigrations = MigrationProvider::getTestData();
-        $arguments = new FilterMigrationsByLastExecutedArguments(self::SCHEMA_NAME, ...$testMigrations);
+        $arguments = new GetLastExecutedMigrationArguments(self::SCHEMA_NAME, ...$testMigrations);
 
-        $sut = new FilterMigrationsByLastExecutedUseCase($readRepository);
+        $sut = new GetLastExecutedMigrationService($readRepository);
         $response = $sut->handle($arguments);
         [$firstMigration, $secondMigration] = $testMigrations;
 
@@ -97,9 +92,9 @@ class FilterMigrationsByLastExecutedUseCaseTest extends TestCase
 
         $readRepository = new MigrationPDOReadRepository($connection);
         $testMigrations = MigrationProvider::getTestData();
-        $arguments = new FilterMigrationsByLastExecutedArguments(self::SCHEMA_NAME, ...$testMigrations);
+        $arguments = new GetLastExecutedMigrationArguments(self::SCHEMA_NAME, ...$testMigrations);
 
-        $sut = new FilterMigrationsByLastExecutedUseCase($readRepository);
+        $sut = new GetLastExecutedMigrationService($readRepository);
         $response = $sut->handle($arguments);
         $message = $response->error() !== null
             ? $response->error()->getMessage()
@@ -122,9 +117,9 @@ class FilterMigrationsByLastExecutedUseCaseTest extends TestCase
 
         $readRepository = new MigrationPDOReadRepository($connection);
         $testMigrations = MigrationProvider::getTestData();
-        $arguments = new FilterMigrationsByLastExecutedArguments(self::SCHEMA_NAME, ...$testMigrations);
+        $arguments = new GetLastExecutedMigrationArguments(self::SCHEMA_NAME, ...$testMigrations);
 
-        $sut = new FilterMigrationsByLastExecutedUseCase($readRepository);
+        $sut = new GetLastExecutedMigrationService($readRepository);
         $response = $sut->handle($arguments);
         $message = $response->error() !== null
             ? $response->error()->getMessage()

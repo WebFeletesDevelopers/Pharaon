@@ -1,13 +1,13 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase;
+namespace WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory;
 
 /**
- * Class GetAllMigrationsInDirectoryArguments
- * @package WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase
+ * Class FindMigrationsInDirectoryArguments
+ * @package WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory
  * @author WebFeletesDevelopers
  */
-class GetAllMigrationsInDirectoryArguments
+class FindMigrationsInDirectoryArguments
 {
     private string $migrationFilesPath;
 

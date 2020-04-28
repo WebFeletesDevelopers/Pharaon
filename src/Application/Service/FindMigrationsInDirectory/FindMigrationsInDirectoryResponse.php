@@ -1,16 +1,16 @@
 <?php
 
-namespace WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase;
+namespace WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory;
 
 use WebFeletesDevelopers\Pharaon\Application\UseCase\BaseUseCaseResponse;
 use WebFeletesDevelopers\Pharaon\Domain\Migration\Migration;
 
 /**
- * Class GetAllMigrationsInDirectoryResponse
- * @package WebFeletesDevelopers\Pharaon\Application\UseCase\GetAllMigrationsInDirectoryUseCase
+ * Class FindMigrationsInDirectoryResponse
+ * @package WebFeletesDevelopers\Pharaon\Application\Service\FindMigrationsInDirectory
  * @author WebFeletesDevelopers
  */
-class GetAllMigrationsInDirectoryResponse extends BaseUseCaseResponse
+class FindMigrationsInDirectoryResponse extends BaseUseCaseResponse
 {
     /** @var array<Migration> */
     private array $migrations;
